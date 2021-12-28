@@ -1,0 +1,56 @@
+.tag {
+	font-size: var(--bs-body-font-size);
+font-weight: var(--bs-body-font-weight);
+text-align: var(--bs-body-text-align, center);
+}
+
+.mylink {
+	color: #212529;
+}
+
+a.mylink:hover {
+	color: #6c757d;
+}
+
+.mt {
+  position: relative;
+  bottom:0.25rem;
+}
+
+
+.btn-check:active + .btn-secondary, .btn-check:checked + .btn-secondary, .btn-secondary.active, .btn-secondary:active, .show > .btn-secondary.dropdown-toggle {
+    background-color: #40494b;
+    color: #fff;
+	border-color: #51585e;
+}
+
+.container-fluid{
+	padding-left: 10vw;
+}
+
+.btn-sm {
+	padding: .05rem .3rem;
+border-radius: .2rem;
+margin-top: 0.1rem;
+}
+
+ul {
+  margin: 0;
+}
+ul {
+  list-style-type: none;
+}
+ul > li {
+  text-indent: -0.5rem;
+}
+ul > li:before {
+  content: '\2014';
+  text-indent: -0.5rem;
+  margin-right: 0.5rem;
+}
+
+.dash {
+	position: relative;
+  bottom:-0.1rem;
+}
+

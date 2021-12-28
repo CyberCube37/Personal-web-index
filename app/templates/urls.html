@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Links in category {{title}}:</h1>
+	{% for url in urls%}
+		<div class="row">
+			<div class="col-1"> 
+				<span class="dash mx-2">&#8212;</span> 
+			</div> 
+			<div class="col"> 
+				<div class="container-mx-0">
+					<div class="row">
+						<div class="col-sm-auto"> 
+							<a class="fw-bold fs-4 text-decoration-none mylink mt" id="{{url.id}}" href="{{url.url}}">{{url.title}}</a>
+						</div>
+						<div class="col-sm-auto"> 
+							<span class="fs-5 text-secondary mx-3">{{url.description}}</span>
+						</div>
+						<div class="col-sm-auto">
+							<div class="container">
+								<div class="row">
+									{% for tag in url.tags %}
+										<div class="col-auto" style="--bs-gutter-x: 0.5rem; ">
+											<button id="{{tag.id}}" class="btn btn-secondary btn-sm fs-6" onclick="window.location.href='{{url_for('main.get_tag', tag_id=tag.id )}}'"> {{tag.name}}</button>
+										</div>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+
+						{% if session.get("active") %}
+							<div class="col-sm-auto">
+								<span  class="mx-4" onclick="window.location.href='{{ url_for('main.edit_url', url_id=url.id) }}'"><i class="bi bi-pencil-fill"></i> edit</span>
+
+								{% set name = url.title %}
+
+								{%if not current %}
+									{% set next=url_for('main.delete_url', url_id=url.id) %}
+
+								{% else %}
+									{% set next=url_for('main.delete_url', url_id=url.id, next=current) %}
+								{%endif%}
+
+								<span onclick="redirect('{{ name }}', '{{ next }}');"> <i class="bi bi-x-square-fill"></i> delete</span>
+							</div>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		function redirect(name, url) {
+			if (confirm("Delete url " + name + "?") == true) {
+				location.href = url;
+			};
+		};
+	</script>
+{% endblock %}
