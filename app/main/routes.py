@@ -1,11 +1,11 @@
 from app import db
 from app.main.forms import AddUrlForm, AddTagForm, EditUrlForm, EditTagForm
 from app.auth.decorators import add, remove
-from app.models import Tag, Link, User
+from app.models import Tag, Link
 from app.main import bp
 
-from flask import render_template, flash, redirect, url_for, request, Markup
-from flask_login import login_required, current_user
+from flask import render_template, flash, redirect, url_for, request, Markup, abort
+from flask_login import current_user
 
 @bp.route('/', methods=['GET'])
 def index():
@@ -19,6 +19,8 @@ def get_tag(tag_id):
 	#get all urls that have the tag with id tag_id and render them as a list
 	tag = Tag.query.filter_by(id=tag_id).first()
 	if tag:
+		if tag.name == "skrivno" and not (current_user.add or current_user.remove):
+			return abort(403)
 		urls = Link.query.with_parent(tag).all()
 		return render_template('urls.html', urls=urls, current=tag.id, title=tag.name.capitalize())
 	else:

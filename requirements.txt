@@ -10,7 +10,6 @@ Flask-Session==0.4.0
 Flask-SQLAlchemy==2.5.1
 Flask-WTF==1.0.0
 greenlet==1.1.2
-HTMLParser==0.0.2
 importlib-metadata==4.8.2
 importlib-resources==5.4.0
 itsdangerous==2.0.1
