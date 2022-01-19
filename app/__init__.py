@@ -5,12 +5,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_session import Session
 from flask_paranoid import Paranoid
+from flask_login import LoginManager
 
 import logging
 from logging.handlers import RotatingFileHandler
 
 db = SQLAlchemy()
 migrate = Migrate()
+login = LoginManager()
+login.login_view = 'auth.login'
+login.login_message = 'Please log in to access this page.'
 sess = Session()
 paranoid = Paranoid()
 paranoid.redirect_view = '/'
@@ -21,6 +25,7 @@ def create_app(config_class=Config):
 
 	db.init_app(app)
 	migrate.init_app(app, db)
+	login.init_app(app)
 	sess.init_app(app)
 	paranoid.init_app(app)
 
@@ -32,6 +37,8 @@ def create_app(config_class=Config):
 
 	from app.main import bp as main_bp
 	app.register_blueprint(main_bp)
+
+
 
 	if not app.debug and not app.testing:
   
@@ -57,4 +64,7 @@ def create_app(config_class=Config):
 	return app
 
 from app import models
+
+login.anonymous_user = models.MyAnonymousUser
+
 
