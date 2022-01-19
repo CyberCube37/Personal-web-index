@@ -1,5 +1,5 @@
 import os
-from redis import Redis
+from redis import from_url
 from dotenv import load_dotenv
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -19,7 +19,7 @@ class Config(object):
 	SESSION_PERMANENT = False
 	SESSION_USE_SIGNER = True
 	REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
-	SESSION_REDIS = Redis(REDIS_URL)
+	SESSION_REDIS = from_url(REDIS_URL)
 	LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 
 class DevelopementConfig(Config):
