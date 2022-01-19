@@ -1,10 +1,11 @@
 from app import db
 from app.main.forms import AddUrlForm, AddTagForm, EditUrlForm, EditTagForm
-from app.auth.decorators import login_required
-from app.models import Tag, Link
+from app.auth.decorators import add, remove
+from app.models import Tag, Link, User
 from app.main import bp
 
 from flask import render_template, flash, redirect, url_for, request, Markup
+from flask_login import login_required, current_user
 
 @bp.route('/', methods=['GET'])
 def index():
@@ -25,7 +26,7 @@ def get_tag(tag_id):
 		return redirect(url_for('main.index'))
 
 @bp.route('/add_url', methods=['GET', 'POST'])
-@login_required
+@add
 def add_url():
 	#you must be logged in to add a url
 
@@ -77,7 +78,7 @@ def add_url():
 	return render_template('add_url.html', form=form, title="Add URL")
 
 @bp.route('/add_tag', methods=['GET', 'POST'])
-@login_required
+@add
 def add_tag():
 	#you must be logged in to add a tag
 	#initiate the form
@@ -99,7 +100,7 @@ def add_tag():
 	return render_template('add_tag.html', form=form, title="Add category")
 
 @bp.route('/edit_url/<int:url_id>', methods=['GET', 'POST'])
-@login_required
+@remove
 def edit_url(url_id):
 	#you must be logged in to edit a url
 	#get the url entry from the database and prepopulate the form with it's data
@@ -151,7 +152,7 @@ def edit_url(url_id):
 	return render_template('edit_url.html', form=form, title="Edit URL")
 
 @bp.route('/edit_tag/<int:tag_id>', methods=['GET', 'POST'])
-@login_required
+@remove
 def edit_tag(tag_id):
 	#you must be logged in to edit a url
 	#get the tag from the database and prepopulate the form with it's data
@@ -172,7 +173,7 @@ def edit_tag(tag_id):
 
 
 @bp.route('/delete_tag/<int:tag_id>', methods=['GET'])
-@login_required
+@remove
 def delete_tag(tag_id):
 	#you must be logged in to delete a tag
 	#check if the tag exists, if it exists delete it and redirect to the home page
@@ -188,7 +189,7 @@ def delete_tag(tag_id):
 	return redirect(url_for('main.index'))
 
 @bp.route('/delete_url/<int:url_id>', methods=['GET'])
-@login_required
+@remove
 def delete_url(url_id):
 	#you must be logged in to delete a url
 	#check if the url exists, if it exists delete it and redirect to the previous page or the home page

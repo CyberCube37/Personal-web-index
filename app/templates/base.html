@@ -22,7 +22,7 @@
 				<a class="nav-link" href="{{ url_for('main.index') }}">Categories</a>
 			{% endif %}
 
-			{% if session.get("active") %}
+			{% if not current_user.is_anonymous %}
 
 				{% if request.path==url_for('auth.logout')%} 
 					<span class="nav-link active"> Logout </span> 

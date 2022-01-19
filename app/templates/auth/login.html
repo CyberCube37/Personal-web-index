@@ -23,6 +23,7 @@
                 </div>
             {% endfor %}
         </div>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
         <button id="submit" class="btn btn-secondary" name="submit" type="submit">Sign In</button>
     </form>
 {% endblock %}

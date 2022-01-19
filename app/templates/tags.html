@@ -10,7 +10,7 @@
 			<div class="col-sm">
 				<h1>{{title}}</h1>
 			</div>
-			{% if session.get("active") %}
+			{% if current_user.add %}
 			<div class="col-sm-auto align-self-center">
 				<button type="button" onclick="window.location.href='{{ url_for('main.add_tag') }}'" class="btn btn-secondary"><i class="bi bi-plus-circle mx-1"></i>ADD CATEGORY</span></button>
 				<button type="button" onclick="window.location.href='{{ url_for('main.add_url') }}'" class="btn btn-secondary"><i class="bi bi-plus-circle mx-1"></i>ADD URL</span></button>
@@ -22,7 +22,7 @@
 	    {% for tag in tags%}
 	    	<li>
 	    	<a class="fw-bold fs-4 text-decoration-none mylink" style="margin-right: 0.5rem" id="{{tag.id}}" onclick="window.location.href='{{url_for('main.get_tag', tag_id=tag.id )}}'"> {{tag.name}}</a>
-	        {% if session.get("active") %}
+	        {% if current_user.remove %}
 	        	<span  class="mx-2" onclick="window.location.href='{{ url_for('main.edit_tag', tag_id=tag.id) }}'"><i class="bi bi-pencil-fill"></i> edit</span>
 		        {% set name = tag.name %}
 		        {% set url = url_for("main.delete_tag", tag_id=tag.id) %}

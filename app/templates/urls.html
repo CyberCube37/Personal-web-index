@@ -28,7 +28,7 @@
 							</div>
 						</div>
 
-						{% if session.get("active") %}
+						{% if current_user.remove%}
 							<div class="col-sm-auto">
 								<span  class="mx-4" onclick="window.location.href='{{ url_for('main.edit_url', url_id=url.id) }}'"><i class="bi bi-pencil-fill"></i> edit</span>
 
